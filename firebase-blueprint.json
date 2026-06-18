@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the platform (customer or worker).",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "worker"] },
+        "rating": { "type": "number" },
+        "currentLocation": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        }
+      },
+      "required": ["name", "phone", "role"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "A task or errand posted by a customer.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "location": { "type": "string" },
+        "distance": { "type": "number" },
+        "budget": { "type": "number" },
+        "urgency": { "type": "string" },
+        "status": { "type": "string", "enum": ["posted", "matched", "in-progress", "payment-pending", "paid"] },
+        "customerId": { "type": "string" },
+        "workerId": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["title", "category", "budget", "status", "customerId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "users": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles."
+    },
+    "jobs": {
+      "schema": { "$ref": "#/entities/Job" },
+      "description": "Stores all posted tasks."
+    }
+  }
+}
